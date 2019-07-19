@@ -27,6 +27,8 @@ Route::put('/ubahPas',"UserController@ubahPas");
 
 Route::get('/user',"AdminController@table");
 Route::any('/user/cari',"AdminController@cari");
+Route::put('/unverify/{id}',"AdminController@unverify");
+Route::put('/approve/{id}',"AdminController@approve");
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

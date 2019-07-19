@@ -22,14 +22,14 @@
                     <b>Account Status</b> <a class="float-right">{{$data->status}}</a>
                   </li>
                   <li class="list-group-item">
-                    <b>Following</b> <a class="float-right">543</a>
+                    <b>Email</b> <a class="float-right">{{$data->email}}</a>
                   </li>
                   <li class="list-group-item">
                     <b>Joined at</b> <a class="float-right">{{date($data->created_at)}}</a>
                   </li>
                 </ul>
 
-                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                
               </div>
               <!-- /.card-body -->
             </div>

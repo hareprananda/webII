@@ -15,6 +15,12 @@
         </div>
     </form>
     <div class="card-body">
+    @if ($message = Session::get('sukses'))
+                      <div class="alert alert-primary alert-block" id="alert">
+                        <button type="button" class="close" data-dismiss="alert">×</button> 
+                        <strong>{{ $message }}</strong>
+                      </div>
+                    @endif
         <table id="example2" class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -51,9 +57,17 @@
                 >{{$dat->status}}</td>
                 <td>
                 @if(($dat->status)=="approve")
-                    <button class="btn btn-danger">Unverifie</button>
+                <form action="/unverify/{{$dat->id}}" method="post" onclick="return confirm('Apakah anda yakin ingin menurunkan status akun ini menjadi unverify?')">
+                @csrf
+                {{method_field("PUT")}}
+                    <button class="btn btn-danger">Unverified</button>
+                </form>
                 @elseif(($dat->status)=="unverified")
+                <form action="/approve/{{$dat->id}}" method="post">
+                @csrf
+                {{method_field("PUT")}}
                     <button class="btn btn-primary">Approve</button>
+                </form>
                 @endif
                 </td>
                 </tr>
