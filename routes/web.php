@@ -14,13 +14,19 @@
 Route::get('/', function () {
     return redirect("/house");
 });
-
-
-
-Route::get('/house',"AdminController@house")->name("house");
 Route::get('/modal/{data}', "LoadController@modal");
-Route::get('/ruangan/{data}', "AdminController@ruangan");
-Route::get('/setting',"AdminController@profile");
+
+
+Route::get('/house',"UserController@house")->name("house");
+Route::get('/ruangan/{data}', "UserController@ruangan");
+Route::get('/setting',"UserController@profile");
+Route::get('/try',"UserController@try");
+Route::put('/ubah',"UserController@ubah");
+Route::put('/ubahPas',"UserController@ubahPas");
+
+
+Route::get('/user',"AdminController@table");
+Route::any('/user/cari',"AdminController@cari");
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

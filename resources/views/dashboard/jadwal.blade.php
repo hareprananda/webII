@@ -125,9 +125,7 @@
     <script src="{{asset('/js/costum/modal.js')}}"></script>
 @else
 <!-- SweetAlert2 -->
-<script src="/adminlte/plugins/sweetalert2/sweetalert2.min.js"></script>
-<!-- Toastr -->
-<script src="/adminlte/plugins/toastr/toastr.min.js"></script>
+
 <script type="text/javascript">
 
 function error(){

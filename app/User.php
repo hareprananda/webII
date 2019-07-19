@@ -40,4 +40,7 @@ class User extends Authenticatable
     public function peran(){
         return $this->belongsTo(Peran::class);
     }
+    public function peranAdmin($data){
+        return null !== $this->peran()->where("nama",$data)->first();
+    }
 }

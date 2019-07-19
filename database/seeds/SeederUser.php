@@ -29,12 +29,13 @@ class SeederUser extends Seeder
 
         ]);
         User::create([
-            "name"=>"Made Muku",
-            "email"=>"demuk@gmail.com",
+            "name"=>"Admin",
+            "email"=>"admin@gmail.com",
             "peran_id"=>"1",
             "status"=>"approve",
-            "password"=>bcrypt("demuk")
+            "password"=>bcrypt("admin")
 
         ]);
+        factory(User::class,40)->create();
     }
 }
