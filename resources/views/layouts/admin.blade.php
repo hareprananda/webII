@@ -141,7 +141,7 @@
             </ul>
           </li>
           <li class="nav-item">
-            <a href="{{url('/setting')}}" class="nav-link">
+            <a href="{{url('/setting')}}" class="nav-link" id="setting">
               <i class="nav-icon fas fa-wrench"></i>
               <p>
                 Pengaturan 

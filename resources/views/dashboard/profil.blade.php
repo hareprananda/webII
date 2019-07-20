@@ -1,6 +1,15 @@
 @extends("layouts.admin")
 @section("konten")
     @section("title","Profile")
+
+<style>
+    #setting{
+    background: rgba(255, 208, 0, .8);
+    box-shadow: 10px 0 0 rgba(255, 208, 0, .8), -10px 0 0 rgba(255, 208, 0, .8);
+    color:black;
+    
+}
+</style>
         <div class="row">
           <div class="col-md-3">
 
