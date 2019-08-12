@@ -1,4 +1,5 @@
 @extends("layouts.admin")
+@section('title','House')
 @section("konten")
 <style>
 #home{

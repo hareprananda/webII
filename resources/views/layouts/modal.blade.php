@@ -22,29 +22,42 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" >Booking Ruangan {{$ruangan}}</h5>
+        <h5 class="modal-title">Booking Ruangan {{$kelas->nama_kelas}}</h5>
         
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action="{{route('bookingRuangan')}}" method="post">
       <div class="modal-body">
+      
+      <h5 class="text-success">Tanggal : {{$tanggal}}</h5>
+      
+      @csrf
+      <input type="hidden" name='tanggal' value="{{$tanggal}}">
+      <input type="hidden" name='kelas' value="{{$kelas->id}}">
         <table style="width:100%;" id="tablemodal">
             
             <tr>
               <td>Jam Mulai</td>
-              <td><input type="time" nama="mulai"></td>
+              <td><input type="time" name="mulai" required></td>
             </tr>
             <tr>
               <td>Jam Selesai :</td>
-              <td><input type="time" name="selesai"></td>
+              <td><input type="time" name="selesai" required></td>
+            </tr>
+            <tr>
+              <td>Keperluan :</td>
+              <td><textarea name="keperluan" rows="10"style="width:100%;" required></textarea></td>
             </tr>
          </table>
+      
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Booking</button>
       </div>
+      </form>
     </div>
   </div>
 </div>

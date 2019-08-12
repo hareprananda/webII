@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Kelas;
 use App\Peran;
+use App\Jadwal;
 use Auth;
 use App\User;
 use Hash;
@@ -23,26 +24,58 @@ class UserController extends Controller
     }
     public function house(){
         
-        return view("dashboard.house");
+        return view("dashboard.house"); 
     }
     public function ruangan($data){
+        $today=date("Y-m-d");
+
         if($data=="aulalab"){
-            $dat=Kelas::where("jenis","Aula & Lab")->get();
+            $dat=Jadwal::whereHas('kelas', function($q) use($data){
+                $q->where('jenis', "Aula & Lab");
+            })->where('tanggal',$today)->get();
         }
         else{
-            $dat=Kelas::where("jenis",$data)->get();
+            $dat=Jadwal::whereHas('kelas', function($q) use($data){
+                $q->where('jenis', $data);
+            })->where('tanggal',$today)->get();
         }
-        return view("dashboard.jadwal",["data"=>$dat,"id"=>$data]);
+        if($data=='aulalab'){
+            $data='Aula & Lab';
+        }
+        $kelas=Kelas::where('jenis',$data)->get()->pluck('nama_kelas');
+        return view("dashboard.jadwal",["data"=>$dat,'jenis'=>$data,"kelas"=>$kelas,"tanggal"=>$today]);
+
+               
+    }
+    public function search($data){
+        $date=$_GET['tanggal'];
+
+        if($data=="aulalab"){
+            $dat=Jadwal::whereHas('kelas', function($q) use($data){
+                $q->where('jenis', "Aula & Lab");
+            })->where('tanggal',$date)->get();
+        }
+        else{
+            $dat=Jadwal::whereHas('kelas', function($q) use($data){
+                $q->where('jenis', $data);
+            })->where('tanggal',$date)->get();
+        }
+        if($data=='aulalab'){
+            $data='Aula & Lab';
+        }
+        $kelas=Kelas::where('jenis',$data)->get()->pluck('nama_kelas');
+        return view("dashboard.jadwal",["data"=>$dat,'jenis'=>$data,"kelas"=>$kelas,"tanggal"=>$date]);
+
     }
     public function profile(){
         
         $data=Auth::user();
-
+        
         $peran=Peran::select("nama")->where("id",$data->peran_id)->get();
         
-       
+        $history=Jadwal::where('pemesan',$data->id)->orderBy('created_at', 'desc')->get();
         
-        return view('dashboard.profil',['peran'=>$peran,'data'=>$data]);
+        return view('dashboard.profil',['peran'=>$peran,'data'=>$data,"history"=>$history]);
 
     }
     public function ubah(Request $post){
@@ -86,6 +119,24 @@ class UserController extends Controller
             
         }
         return back()->with(['perror' => 'Password Salah',"buka"=>"1"]);
+    }
+    public function booking(Request $request){
+    
+        if($request->mulai > $request->selesai){
+            return redirect()->back()->with("gagal","Waktu mulai dan selesai tidak relevan");
+        }
+        if($request->mulai > "22:00" || $request->mulai < "07:30"){
+            return redirect()->back()->with("gagal","Booking kelas dapat dilakukan dari jam 07:30 AM sampai 22:00PM");
+        }
+        Jadwal::create([
+            "pemesan"=>Auth::user()->id,
+            "mulai"=>$request->mulai,
+            "selesai"=>$request->selesai,
+            "tanggal"=>$request->tanggal,
+            "id_kelas"=>$request->kelas,
+            "keperluan"=>$request->keperluan
+        ]);
+        return redirect()->back()->with("sukses","Booking kelas sedang dalam proses verifikasi");
     }
     
 }

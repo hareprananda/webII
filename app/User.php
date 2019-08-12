@@ -43,4 +43,7 @@ class User extends Authenticatable
     public function peranAdmin($data){
         return null !== $this->peran()->where("nama",$data)->first();
     }
+    public function jadwal(){
+        return $this->hasMany('App\Jadwal','pemesan','id');
+    }
 }

@@ -41,7 +41,7 @@
                    
                     $a=(1+($_GET['page']*10))-10; 
                    
-                @endphp
+                @endphp 
                 @foreach($data as $dat)
                 <tr>
                 <td>{{$a}}</td>

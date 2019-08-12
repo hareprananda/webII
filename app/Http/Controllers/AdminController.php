@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Jadwal;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -40,6 +41,39 @@ class AdminController extends Controller
         $data->status="approve";
         $data->save();
         return back()->with(["sukses"=>"Status user berhasil diubah"]);
+    }
+    public function bookToday(){
+        $data=Jadwal::where('tanggal','>=',date("Y-m-d"))->paginate(20);
+        return view('dashboard.daftarbooking',["data"=>$data]);
+       
+    }
+    public function search(){
+        $data=Jadwal::where('tanggal',$_GET['tanggal'])->paginate(20);
+        return view('dashboard.daftarbooking',["data"=>$data]);
+       
+    }
+    public function ubahStatus(Request $request, $id){
+        $jadwal=Jadwal::find($id);
+        switch ($request->input('action')) {
+            case 'ignore':
+                $jadwal->status='ignored';
+                $jadwal->save();
+                return  redirect()->back()->with('sukses','Status book telah diubah !');
+                break;
+    
+            case 'approve':
+                $jadwal->status='approve';
+                $jadwal->save();
+                return  redirect()->back()->with('sukses','Status book telah diubah !');
+            break;
+            case 'cancel':
+                $jadwal->status='pending';
+                $jadwal->save();
+                return  redirect()->back()->with('sukses','Status book telah diubah !');
+            break;
+    
+            
+        }
     }
 }
 

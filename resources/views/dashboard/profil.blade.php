@@ -53,41 +53,61 @@
             <div class="card">
               <div class="card-header p-2">
                 <ul class="nav nav-pills">
+                  @if(Auth::user()->peran_id != 1)
                   <li class="nav-item"><a class="nav-link @if(!($message =  Session::get('buka'))) active @endif" href="#history" data-toggle="tab">History</a></li>
-                  
-                  <li class="nav-item"><a class="nav-link @if(($message =  Session::get('buka'))) active @endif" href="#settings" data-toggle="tab">Settings</a></li>
+                  @endif
+                  <li class="nav-item"><a class="nav-link @if(($message =  Session::get('buka'))||(Auth::user()->peran_id==1)) active @endif" href="#settings" data-toggle="tab">Settings</a></li>
                 </ul>
               </div><!-- /.card-header -->
               <div class="card-body">
                 <div class="tab-content">
+                  @if(Auth::user()->peran_id != 1)
                   <div class="@if(!($message =  Session::get('buka'))) active @endif tab-pane" id="history">
-                  @for($i=0; $i < 2;$i++)
-                    <div class='card card-primary'>
-                      <div class="card-header" style="font-weight:bold">
-                        {{date("Y-m-d")}}
-                      </div>
-                      
-                      <div class="card-body">
-                        Memesan kelas A
-                        Status :Approve
-                      </div>
+                    <div class="row">
+                      @foreach($history as $histo)
+                        <div class="col-6">
+                          <div class="card 
+                          @if($histo->status=='approve')
+                          card-success
+                          @elseif($histo->status=='ignored')
+                          card-danger
+                          @elseif($histo->status=='pending')
+                          card-secondary
+                          @endif
+                          ">
+                            <div class="card-header" style="font-weight:bold">
+                              <div class="row">
+                                <div class="col-6">
+                                  {{$histo->tanggal}} 
+                                </div>
+                                <div class="col-6 text-right">
+                                  {{$histo->status}}
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="card-body">
+                              <div class="row">
+                                <div class="col-12">
+                                  <h4>Ruangan {{$histo->kelas->nama_kelas}}</h4>
+                                </div>
+                                <div class="col-12">
+                                  {{$histo->mulai."-".$histo->selesai}}
+                                </div>
+                              
+                              
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      @endforeach
                     </div>
-                    <div class='card card-danger'>
-                      <div class="card-header" style="font-weight:bold">
-                      {{date("Y-m-d")}}
-                      </div>
-                      
-                      <div class="card-body">
-                        Memesan kelas A
-                        Status :Gagal
-                      </div>
-                    </div>
-                    @endfor
                   </div>
+                  @endif
                 
                   <!-- /.tab-pane -->
 
-                  <div class="tab-pane nav-link @if(($message = Session::get('buka'))) active @endif" id="settings">
+                  <div class="tab-pane nav-link @if(($message = Session::get('buka'))||(Auth::user()->peran_id==1)) active @endif" id="settings">
                     <form class="form-horizontal" method="post"  enctype="multipart/form-data" action="/ubah">
                     @if ($message = Session::get('success'))
                       <div class="alert alert-success alert-block" id="alert" style="width:50%;"> 
