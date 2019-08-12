@@ -1,1 +1,5 @@
-<h1>ini adalah text</h1>
+<html>
+<head>
+</head>
+<body>Ini adalah body</body>
+</html>
