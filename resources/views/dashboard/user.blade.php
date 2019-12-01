@@ -26,7 +26,7 @@
                 <tr>
                     <th>#</th>
                     <th>Nama</th>
-                    <th>Email</th>
+                    <th>NIM</th>
                     <th>Joined At</th>
                     <th>Approval</th>
                     <th>Action</th>
@@ -46,7 +46,7 @@
                 <tr>
                 <td>{{$a}}</td>
                 <td>{{$dat->name}}</td>
-                <td>{{$dat->email}}</td>
+                <td>{{$dat->id}}</td>
                 <td>{{$dat->created_at}}</td>
                 <td
                 @if(($dat->status)=="approve")

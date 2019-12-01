@@ -15,9 +15,9 @@ class UserController extends Controller
     public $dimensi;
 
     public function __construct(){
+        $this->middleware('auth');
         $this->tempatgambar=storage_path('app/public/images');
         $this->dimensions = ['245', '300', '500'];
-        $this->middleware('auth');
         if(Auth::guest()){
             return route("login");
         }

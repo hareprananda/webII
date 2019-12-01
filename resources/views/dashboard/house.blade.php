@@ -41,7 +41,7 @@
             <div class="icon">
                 <i class="fas fa-university"></i>
             </div>
-            <a href="/ruangan/100" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{url('/ruangan/100')}}" class="small-box-footer">Detail <i class="fas fa-arrow-circle-right"></i></a>
         </div>
         </td>
         <td>
@@ -52,7 +52,7 @@
             <div class="icon">
                 <i class="fas fa-university"></i>
             </div>
-            <a href="/ruangan/200" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{url('/ruangan/200')}}" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
         </div>
         </td>
         <td>
@@ -63,7 +63,7 @@
             <div class="icon">
                 <i class="fas fa-university"></i>
             </div>
-            <a href="/ruangan/300" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{url('/ruangan/300')}}" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
         </div>
         
     </tr>
@@ -77,7 +77,7 @@
             <div class="icon">
                 <i class="fas fa-university"></i>
             </div>
-            <a href="/ruangan/400" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{url('/ruangan/400')}}" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
         </div>
         </td>
         <td>
@@ -88,7 +88,7 @@
             <div class="icon">
                 <i class="fas fa-university"></i>
             </div>
-            <a href="/ruangan/500" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{url('/ruangan/500')}}" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
         </div>
         </td>
         <td>
@@ -99,11 +99,12 @@
             <div class="icon">
                 <i class="fas fa-university"></i>
             </div>
-            <a href="/ruangan/aulalab" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
+            <a href="{{url('/ruangan/aulalab')}}" class="small-box-footer">Detail<i class="fas fa-arrow-circle-right"></i></a>
         </div>
         </td>
     </tr>
 </table>
+
 
 
 @endsection

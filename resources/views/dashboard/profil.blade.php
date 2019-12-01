@@ -18,7 +18,7 @@
               <div class="card-body box-profile">
                 <div class="text-center">
                   <img class="profile-user-img img-fluid img-circle"
-                       src="/img/user/{{$data->photo}}"
+                       src={{url("/img/user/".$data->photo)}}
                        style="width:200px;height:200px;">
                 </div>
 

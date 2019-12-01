@@ -18,7 +18,6 @@ class SeederUser extends Seeder
             "peran_id"=>"2",
             "status"=>"unverified",
             "password"=>bcrypt("komangnanda")
-
         ]);
         User::create([
             "name"=>"Made Baerai",

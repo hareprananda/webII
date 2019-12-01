@@ -12,12 +12,13 @@
 */
 
 Route::get('/', function () {
-    return redirect("/house");
+    return redirect("/login");
 });
+
 Route::get('/modal/{data}/{tanggal}', "LoadController@modal");
 
 Route::post("/booking/ruangan","UserController@booking")->name('bookingRuangan');
-Route::get('/house',"UserController@house")->name("house");
+Route::get('/house',"UserController@house")->name("house")->middleware('auth');
 Route::get('/ruangan/{data}', "UserController@ruangan");
 Route::get('/setting',"UserController@profile");
 Route::get('/try',"UserController@try");
@@ -35,3 +36,17 @@ Route::put('/prosesbook/{id}',"AdminController@ubahStatus")->name('prosesBook');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/cobaapi/{id}', 'HomeController@api');
+Route::get('/postapi', 'HomeController@postApi');
+Route::get('/reg', 'HomeController@register');
+Route::get('/log', 'HomeController@login');
+Route::get("/formapi",function(){
+    return view("formapi");
+});
+Route::post("/formapi","HomeController@login");
+
+
+
+
+
+Route::post('/custom/login', 'CustomController\AuthController@postLogin'); 
