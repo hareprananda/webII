@@ -75,6 +75,7 @@ class AuthController extends Controller
     {
         
             
+            
             if($register == false && $request->id != 3){
                 $dolar=array(
                     "id"=>$request->id,
@@ -83,7 +84,7 @@ class AuthController extends Controller
                 $panggil=$this->callAPI('POST', 'http://localhost:8000/api/login', json_encode($dolar));
                 $response = json_decode($panggil, true);
                 if(!isset($response["success"])){
-                    return redirect()->back();
+                    return response()->json("error",400);
                 }
                 $token= $response["success"]["token"];
                 $tokenHeader='Authorization: Bearer '.$token;
@@ -105,10 +106,12 @@ class AuthController extends Controller
             
             if (Auth::attempt(['id' => request('id'), 'password' => request('password')])) {
                 // Authentication passed...
-                return redirect('/house');
+                //return redirect('/house');
+                return response()->json("Sukses");
             }
         
-        return Redirect::to("login")->withSuccess('Oppes! You have entered invalid credentials');
+        //return Redirect::to("login")->withSuccess('Oppes! You have entered invalid credentials');
+            return response()->json("error",400);
     }
  
     public function postRegistration($data,$login)

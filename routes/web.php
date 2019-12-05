@@ -23,13 +23,14 @@ Route::get('/ruangan/{data}', "UserController@ruangan");
 Route::get('/setting',"UserController@profile");
 Route::get('/try',"UserController@try");
 Route::put('/ubah',"UserController@ubah");
+Route::post('/ajaxpoto',"UserController@ajaxpoto");
 Route::put('/ubahPas',"UserController@ubahPas");
-Route::get('/ruangan/{data}/search', ['as' => 'searchKelas', 'uses' => 'UserController@search']);
-
+Route::get('/cekakun', "UserController@cekakun");
+Route::get('/ruangan/{data}/search', 'UserController@search')->name('searchKelas');
+Route::delete("/hapus/booking","UserController@hapusBooking");
 Route::get('/user',"AdminController@table");
 Route::get('/booklist',"AdminController@bookToday")->name('booking');
 Route::get('/booklist/search',"AdminController@search")->name("searchBook");
-Route::any('/user/cari',"AdminController@cari");
 Route::put('/unverify/{id}',"AdminController@unverify");
 Route::put('/approve/{id}',"AdminController@approve");
 Route::put('/prosesbook/{id}',"AdminController@ubahStatus")->name('prosesBook');

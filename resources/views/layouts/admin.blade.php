@@ -19,6 +19,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <link rel="shortcut icon" type="image/png" href="{{asset('/img/logostiki.png')}}"/>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -38,14 +39,13 @@
 
     <!-- Right navbar links -->
     <ul class="navbar-nav ml-auto">
-    <p style="margin-top:13px;"> Akun status : <span
+    <p style="margin-top:13px;"> Akun status : <span class="
       @if((Auth::user()->status)=="unverified")
-
-      style="color:red;"
+      text-danger
       @else
-      style="color:green;"
-      @endif
-      >{{Auth::user()->status}}</span></p> 
+      text-success
+      @endif"
+       id="userStatus">{{Auth::user()->status}}</span></p> 
     </ul>
   </nav>
   <!-- /.navbar -->
@@ -68,7 +68,7 @@
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image" >
-          <img src={{asset("/img/user/".Auth::user()->photo)}} class="img-circle elevation-2" style="width:35px;height:35px;">
+          <img src={{asset("/img/user/".Auth::user()->photo)}} class="img-circle elevation-2 potoPropil" style="width:35px;height:35px;" >
         </div>
         <div class="info">
             <a href="{{url('/setting')}}" class="d-block">{{Auth::user()->name}}</a>
@@ -80,11 +80,20 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview " >
-            <a href="#" class="nav-link " id="home">
+          <li class="nav-item ">
+            <a href="{{url('/house')}}" class="nav-link " id="setting">
               <i class="nav-icon fas fa-home"></i>
               <p>
-                  Home
+                Home
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview " >
+            <a href="#" class="nav-link " id="home">
+              <i class="nav-icon fas fa-university"></i>
+              <p>
+                  Ruangan
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -188,7 +197,20 @@
     <!-- Content Header (Page header) -->
    
     <!-- /.content-header -->
-
+    <script src="{{asset('/js/app.js')}}"> </script>
+    <script src="{{asset('/adminlte/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <script>
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 99999999999,
+      onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })    
+    </script>
     <!-- Main content -->
     <section class="content">
         @yield("konten")
@@ -218,7 +240,7 @@
 <script src="{{asset('/adminlte/dist/js/adminlte.js')}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset('/adminlte/dist/js/pages/dashboard.js')}}"></script>
-<script src="{{asset('/js/app.js')}}"> </script>
+
 
 </body>
 </html>

@@ -5,15 +5,15 @@
     <div class="card-header bg-primary">
     <h3>User Table</h3>
     </div>
-    <form class="form-inline ml-3" style="margin-top:10px;" action="{{url('/user/cari')}}">
+    <div class="form-inline ml-3" style="margin-top:10px;" >
         @csrf
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Cari orang" aria-label="Recipient's username" aria-describedby="button-addon2" name="search">
+            <input type="text" class="form-control" placeholder="Cari orang" aria-label="Recipient's username" aria-describedby="button-addon2" id="search">
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="submit" id="button-addon2"><i class="fas fa-search"></i></button>
             </div>
         </div>
-    </form>
+    </div>
     <div class="card-body">
     @if ($message = Session::get('sukses'))
                       <div class="alert alert-primary alert-block" id="alert">
@@ -28,60 +28,76 @@
                     <th>Nama</th>
                     <th>NIM</th>
                     <th>Joined At</th>
-                    <th>Approval</th>
+                    
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @php 
-                    if(!isset($_GET['page'])){
-                        $_GET['page']=1;
-                    }
-                
-                   
-                    $a=(1+($_GET['page']*10))-10; 
-                   
-                @endphp 
-                @foreach($data as $dat)
-                <tr>
-                <td>{{$a}}</td>
-                <td>{{$dat->name}}</td>
-                <td>{{$dat->id}}</td>
-                <td>{{$dat->created_at}}</td>
-                <td
-                @if(($dat->status)=="approve")
-                style="color:green;"
-                @elseif(($dat->status)=="unverified")
-                style="color:red;"
-                @endif
-                >{{$dat->status}}</td>
-                <td>
-                @if(($dat->status)=="approve")
-                <form action="/unverify/{{$dat->id}}" method="post" onclick="return confirm('Apakah anda yakin ingin menurunkan status akun ini menjadi unverify?')">
-                @csrf
-                {{method_field("PUT")}}
-                    <button class="btn btn-danger">Unverified</button>
-                </form>
-                @elseif(($dat->status)=="unverified")
-                <form action="/approve/{{$dat->id}}" method="post">
-                @csrf
-                {{method_field("PUT")}}
-                    <button class="btn btn-primary">Approve</button>
-                </form>
-                @endif
-                </td>
-                </tr>
-                @php $a++; @endphp
-                @endforeach
+                @include("ajax.user")
             </tbody>
             
         </table>
         
     </div>
     <div class="card-footer">
-        {{$data->links()}}
+        
+        {{$data->onEachSide(1)->links()}}
     </div>
 </div>
+<script>
+($(".nav-item .nav-link").eq(10).addClass("active"));
+var searchss="";
+$("#example2").on("submit",".formBtn",function(e){
+    e.preventDefault(); 
+    var index=$(".formBtn").index(this);
+    $.ajax({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        url:$(this).attr('action'),
+        method:"PUT",
+        dataType:'json',
+        success:function(data){
+            $(".formBtn").eq(index).replaceWith(data.view);
+            Toast.fire({
+                type: 'success',
+                title: data.pesan
+            })
+        },
+        error:function(data){
+            console.log(data);
+        }
+    });
+    
+})
+function paginate(url,search=searchss){
+    $.ajax({
+        url:url,
+        data:{pagination:true,search:search},
+        method:"GET",
+        dataType:'json',
+        success:function(data){
+            $(".card-footer").html(data.pagination);
+            $("#example2 tbody").html(data.view);
+        },
+        error:function(data){
+            console.log(data);
+        }
+    })
+}
+$(".card-footer").on('click',".page-item .page-link",function(e){
+    e.preventDefault();
+    var url=$(this).attr('href');
+    if(url != undefined){
+        paginate(url);
+    }    
+})
+$("#search").on("keyup",function(){
+    var url="{{url('/user')}}";
+    searchss=$(this).val();
+    paginate(url);
+})
 
+</script>
 
 @endsection
