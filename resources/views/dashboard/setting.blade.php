@@ -174,7 +174,6 @@ function upload(img){
     var fd = new FormData();
     var files = $('#photo')[0].files[0];
     fd.append('file',files);
-
     
     $.ajax({
         headers: {

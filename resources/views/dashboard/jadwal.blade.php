@@ -218,7 +218,7 @@ Swal.fire({
         method:"DELETE",
         success:function(data){
             $("#"+kelas).html(data.view);
-            $("#textKosong"+data.id).remove();
+            $("#kontener #textKosong"+data.id).remove();
             Toast.fire({
                 type:"success",
                 title:"Booking telah berhasil dihapus"
